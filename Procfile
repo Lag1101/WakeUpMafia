@@ -1,1 +1,1 @@
-web: gunicorn django_lesson.wsgi --log-file -
+web: gunicorn WakeUpMafia.wsgi --log-file -
