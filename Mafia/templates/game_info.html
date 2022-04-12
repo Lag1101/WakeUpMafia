@@ -1,0 +1,83 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+{% block content %}
+  <h2>{{ event.name }}</h2>
+  <p><strong>Дата:</strong> {{ event.date_event }}</p>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-6">
+        <h2>Игра # {{ game.id }} </h2>
+        <table class="table table-bordered border-dark">
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>Имя</th>
+            <th>Роль</th>
+            {% if game.win == "RED" %}
+            <th class="bg-danger text-white"> Красные </th>
+            {% elif game.win == "BLACK" %}
+            <th class="bg-dark text-white"> Черные </th>
+            {% else %}
+            <th class=".bg-light"> Ничья </th>
+            {% endif %}
+          </tr>
+          </thead>
+          <tbody>
+          {% for player in players %}
+          <tr>
+            <th>{{ player.number }} </th>
+            <th>{{ player.people_id }}</th>
+            {% if player.role == "CITIZEN" %}
+              {% if player.best_move == "none" %}
+                <td class="bg-danger text-white">
+                  <img src="{% static '/icon/hand-thumbs-up.svg' %}" alt="" width="auto" height="auto">
+                  Мирный
+                </td>
+              {% else %}
+                <td class="bg-danger text-white">
+                  <img src="{% static '/icon/bullseye.svg' %}" alt="" width="auto" height="auto">
+                  Мирный
+                </td>
+              {% endif %}
+            {% elif player.role == "MAFIA" %}
+            <td class="bg-dark text-white">
+              <img src="{% static '/icon/revolver-gun.svg' %}" alt="" width="auto" height="auto">
+              Мафия
+            </td>
+            {% elif player.role == "DON" %}
+            <td class="bg-dark text-white">
+              <img src="{% static '/icon/fedora-hat.svg' %}" alt="" width="auto" height="auto">
+              Дон
+            </td>
+            {% elif player.role == "SHERIFF" %}
+            <td class="bg-success text-white">
+              <img src="{% static '/icon/sheriff-star.svg' %}" alt="" width="auto" height="auto">
+              Шериф
+            </td>
+            {% else %}
+            <td class="bg-light">
+              Приезжий
+            </td>
+            {% endif %}
+            <td>{{ player.point }}</td>
+          </tr>
+          {% endfor%}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block sidebar %}
+  <div class="nav flex-column" aria-orientation="vertical">
+    <li><a class="nav-link btn btn-panel" href="../{{ event.id }}">Вернуться</a></li>
+    <li><a class="nav-link btn btn-panel" href="./{{ game.id }}/edit_players">Изменить состав</a></li>
+    <li><a class="nav-link btn btn-panel" href="./{{ game.id }}/edit_results">Внести результат</a></li>
+    <li><a class="nav-link btn btn-panel" href="./{{ game.id }}/edit_best_move">Лучший ход</a></li>
+    <li><a class="nav-link btn btn-panel" href="./{{ game.id }}/edit_points">Внести доп. баллы</a></li>
+  </div>
+{% endblock %}

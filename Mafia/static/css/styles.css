@@ -1,0 +1,35 @@
+:root {
+    --color1: #1E90FF;
+    --color2: #0000FF;
+}
+
+header {
+    padding: 20px 0;
+    background: white;
+    background-size: 100%;
+}
+
+.btn-itd {
+    display: block;
+    max-width: 150px;
+    margin: 0 auto;
+    padding: 10px 10px;
+    color: var(--bs-white);
+    background-color: var(--color1);
+}
+
+.btn-itd:hover {
+    color: var(--bs-white);
+    background-color: var(--color2);
+}
+
+.btn-panel:hover {
+    color: var(--bs-white);
+    background-color: var(--color1);
+}
+
+.sidebar-nav {
+    margin-top: 20px;
+    padding: 0;
+    list-style: none;
+}

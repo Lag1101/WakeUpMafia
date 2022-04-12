@@ -1,0 +1,17 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+    <form method="POST">
+        {% csrf_token %}
+        {% for player in players_form %}
+        <div>
+            <row>
+                {{ player }}
+            </row>
+        </div>
+        {% endfor %}
+        <input type="submit" value="Сохранить">
+    </form>
+
+{% endblock %}

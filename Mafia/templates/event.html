@@ -1,0 +1,83 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+{% block content %}
+  <h2>{{ event.name }}</h2>
+  <p><strong>Дата:</strong> {{ event.date_event }}</p>
+
+  {% if game_with_player %}
+  <div class="container">
+    <div class="row">
+      {% for game in game_with_player %}
+          <div class="col-xl-6 col-md-12">
+            <a class="nav-link" href="./{{ event.id }}/{{ game.0.id }}">Игра # {{ game.0.id }}</a>
+            <table class="table table-bordered border-dark">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Имя</th>
+                  <th>Роль</th>
+                  {% if game.0.win == "RED" %}
+                  <th class="bg-danger text-white"> Красные </th>
+                  {% elif game.0.win == "BLACK" %}
+                  <th class="bg-dark text-white"> Черные </th>
+                  {% else %}
+                  <th class=".bg-light"> Ничья </th>
+                  {% endif %}
+                </tr>
+              </thead>
+              <tbody>
+                {% for player in game.1 %}
+                <tr>
+                  <th>{{ player.number }} </th>
+                  <th>{{ player.people_id }}</th>
+                  {% if player.role == "CITIZEN" %}
+                    {% if player.best_move == "none" %}
+                      <td class="bg-danger text-white">
+                        <img src="{% static '/icon/hand-thumbs-up.svg' %}" alt="" width="auto" height="auto">
+                        Мирный
+                      </td>
+                    {% else %}
+                      <td class="bg-danger text-white">
+                        <img src="{% static '/icon/bullseye.svg' %}" alt="" width="auto" height="auto">
+                        Мирный
+                      </td>
+                    {% endif %}
+                  {% elif player.role == "MAFIA" %}
+                    <td class="bg-dark text-white">
+                      <img src="{% static '/icon/revolver-gun.svg' %}" alt="" width="auto" height="auto">
+                      Мафия
+                    </td>
+                  {% elif player.role == "DON" %}
+                    <td class="bg-dark text-white">
+                      <img src="{% static '/icon/fedora-hat.svg' %}" alt="" width="auto" height="auto">
+                      Дон
+                    </td>
+                  {% elif player.role == "SHERIFF" %}
+                    <td class="bg-success text-white">
+                      <img src="{% static '/icon/sheriff-star.svg' %}" alt="" width="auto" height="auto">
+                      Шериф
+                    </td>
+                  {% else %}
+                    <td class="bg-light">Приезжий</td>
+                  {% endif %}
+                  <td>{{ player.point }}</td>
+                </tr>
+                {% endfor%}
+              </tbody>
+            </table>
+          </div>
+      {% endfor%}
+    </div>
+  </div>
+  {% endif %}
+
+{% endblock %}
+
+{% block sidebar %}
+  <div class="nav flex-column" aria-orientation="vertical">
+    <li><a class="nav-link btn btn-panel" href="/">Вернуться</a></li>
+    <li><a class="nav-link btn btn-panel" href="./{{ event.id }}/create_game">Внести игру</a></li>
+    <li><a class="nav-link btn btn-panel" href="./{{ event.id }}/generate_game">Создать рассадку</a></li>
+  </div>
+{% endblock %}

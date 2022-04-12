@@ -1,0 +1,20 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <div class="container">
+        <h1>Игры</h1>
+        {% if events %}
+            {% for event in events %}
+                <a class="nav-link btn btn-panel" href="./event/{{ event.id }}">{{ event.name }} ({{event.date_event}})</a>
+            {% endfor %}
+        {% else %}
+            <p>Нет событий</p>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block sidebar %}
+    <div class="nav flex-column" aria-orientation="vertical">
+        <li><a class="nav-link btn btn-panel" href="{% url 'create_event' %}">Создать событие</a></li>
+    </div>
+{% endblock %}
