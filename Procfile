@@ -1,2 +1,2 @@
-web: gunicorn WakeUpMafia.wsgi --log-file -
+web: python manage.py runserver
 release: python manage.py migrate
