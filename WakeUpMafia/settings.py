@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import django_heroku
 from pathlib import Path
 import os
 
@@ -143,3 +144,5 @@ LOGIN_REDIRECT_URL = '/'
 
 # e-mail на консоль
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+django_heroku.settings(locals(), staticfiles=False)
