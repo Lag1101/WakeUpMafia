@@ -3,25 +3,25 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 
 
-class People(models.Model):
-    class Role(models.TextChoices):
-        USER = 'Красный'
-        ADMIN = 'Шериф'
-        BLACK = 'Черный'
+class League(models.Model):
+    TYPE = [
+        ('SEASON', 'Сезон'),
+        ('SERIES', 'Серия'),
+        ('FINAL', 'Финал'),
+    ]
 
-    nick = models.CharField(max_length=100)
-    password = models.CharField(max_length=100)
-    role = models.CharField(max_length=20, choices=Role.choices, default=Role.USER)
     name = models.CharField(max_length=100)
+    rating_type = models.CharField(max_length=20, choices=TYPE, default='SEASON')
     active = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.nick
+        return self.name
 
 
 class Event(models.Model):
     TYPE = [
         ('FUN', 'Клубные игры'),
+        ('FUN22', 'Клубные игры 2022'),
         ('MINI', 'Миникап'),
     ]
 
@@ -29,7 +29,8 @@ class Event(models.Model):
     date_event = models.DateField(auto_now=False)
     date_insert = models.DateField(auto_now_add=True, editable=False)
     judge = models.ForeignKey(User, on_delete=models.DO_NOTHING)
-    type = models.CharField(max_length=20, choices=TYPE, default='FUN')
+    type = models.ForeignKey(League, on_delete=models.DO_NOTHING)
+    # type = models.CharField(max_length=20, choices=TYPE, default='FUN')
     active = models.BooleanField(default=True)
 
     def __str__(self):
@@ -45,6 +46,7 @@ class Game(models.Model):
 
     event_id = models.ForeignKey(Event, on_delete=models.CASCADE)
     win = models.CharField(max_length=20, choices=TEAM, default='NONE')
+    stats_calc = models.BooleanField(default=False)
     active = models.BooleanField(default=True)
 
     def __str__(self):
@@ -105,3 +107,19 @@ class Player(models.Model):
 
     def __str__(self):
         return self.role
+
+
+class PeopleStatistic(models.Model):
+    people_id = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    # all, win
+    games = models.CharField(max_length=100, default='0|0')
+    # CITIZEN SHERIFF MAFIA DON
+    roles = models.CharField(max_length=100, default='0|0|0|0')
+    win_roles = models.CharField(max_length=100, default='0|0|0|0')
+    # times in2 full_best_move
+    best_move = models.CharField(max_length=100, default='0|0|0')
+    # played on 1, 2, 3...
+    number_love = models.CharField(max_length=100, default='0|0|0|0|0|0|0|0|0|0')
+
+    def __str__(self):
+        return self.people_id

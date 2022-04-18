@@ -15,6 +15,12 @@
 
 {% block sidebar %}
     <div class="nav flex-column" aria-orientation="vertical">
-        <li><a class="nav-link btn btn-panel" href="{% url 'create_event' %}">Создать событие</a></li>
+        {% for group in request.user.groups.all %}
+            {% if group.name == "Club Administration" %}
+                <li><a class="nav-link btn btn-panel" href="../admin">Администраторская</a></li>
+                <li><a class="nav-link btn btn-panel" href="{% url 'create_league' %}">Создать лигу</a></li>
+                <li><a class="nav-link btn btn-panel" href="{% url 'create_event' %}">Создать событие</a></li>
+            {% endif %}
+        {% endfor %}
     </div>
 {% endblock %}

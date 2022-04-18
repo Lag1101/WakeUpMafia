@@ -39,7 +39,7 @@
                       </td>
                     {% else %}
                       <td class="bg-danger text-white">
-                        <img src="{% static '/icon/bullseye.svg' %}" alt="" width="auto" height="auto">
+                        <img src="{% static '/icon/target.svg' %}" alt="" width="auto" height="auto">
                         Мирный
                       </td>
                     {% endif %}
@@ -54,10 +54,17 @@
                       Дон
                     </td>
                   {% elif player.role == "SHERIFF" %}
-                    <td class="bg-success text-white">
-                      <img src="{% static '/icon/sheriff-star.svg' %}" alt="" width="auto" height="auto">
-                      Шериф
-                    </td>
+                    {% if player.best_move == "none" %}
+                      <td class="bg-success text-white">
+                        <img src="{% static '/icon/sheriff-star.svg' %}" alt="" width="auto" height="auto">
+                        Шериф
+                      </td>
+                    {% else %}
+                      <td class="bg-success text-white">
+                        <img src="{% static '/icon/target.svg' %}" alt="" width="auto" height="auto">
+                        Шериф
+                      </td>
+                    {% endif %}
                   {% else %}
                     <td class="bg-light">Приезжий</td>
                   {% endif %}
@@ -77,7 +84,11 @@
 {% block sidebar %}
   <div class="nav flex-column" aria-orientation="vertical">
     <li><a class="nav-link btn btn-panel" href="/">Вернуться</a></li>
-    <li><a class="nav-link btn btn-panel" href="./{{ event.id }}/create_game">Внести игру</a></li>
-    <li><a class="nav-link btn btn-panel" href="./{{ event.id }}/generate_game">Создать рассадку</a></li>
+    {% for group in request.user.groups.all %}
+      {% if group.name == "Club Administration" %}
+        <li><a class="nav-link btn btn-panel" href="./{{ event.id }}/create_game">Внести игру</a></li>
+        <li><a class="nav-link btn btn-panel" href="./{{ event.id }}/generate_game">Создать рассадку</a></li>
+      {% endif %}
+    {% endfor %}
   </div>
 {% endblock %}

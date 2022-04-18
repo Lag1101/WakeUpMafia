@@ -4,22 +4,31 @@ from .models import *
 from django.contrib.auth.models import User
 
 
-class Enter(ModelForm):
-    class Meta:
-        model = People
-        fields = ['nick', 'password']
+class UserRegistrationForm(ModelForm):
+    password = forms.CharField(label='Password', widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Repeat password', widget=forms.PasswordInput)
 
-
-class CreatePeople(ModelForm):
     class Meta:
-        model = People
-        fields = ['nick', 'password', 'name']
+        model = User
+        fields = ('username', 'first_name', 'email')
+
+    def clean_password2(self):
+        cd = self.cleaned_data
+        if cd['password'] != cd['password2']:
+            raise forms.ValidationError('Пароли не совпадают')
+        return cd['password2']
 
 
 class CreateEvent(ModelForm):
     class Meta:
         model = Event
         fields = ['name', 'date_event', 'judge', 'type']
+
+
+class CreateLeague(ModelForm):
+    class Meta:
+        model = League
+        fields = ['name', 'rating_type']
 
 
 class CreateGame(ModelForm):
