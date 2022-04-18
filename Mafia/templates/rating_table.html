@@ -1,0 +1,58 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+{% block content %}
+  <h2>Рейтинг клуба Wake up Mafia! 2022</h2>
+  {% if rating_tables %}
+  {% for rating_table in rating_tables %}
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-6 col-md-12">
+        <h1>{{rating_table.0}}</h1>
+        <table class="table table-bordered border-dark">
+          <thead>
+            <tr>
+              <th class="text-center">Место</th>
+              <th class="text-center">Имя</th>
+              <th class="text-center">Игр</th>
+              <th class="text-center">Побед</th>
+              <th class="text-center">Рейтинг</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for player in rating_table.1 %}
+              {% if player.6 <= 10 or request.user == player.0 %}
+                {% if request.user == player.0 %}
+                  <tr>
+                    <th class="bg-success text-white">{{ player.6 }} </th>
+                    <th class="bg-success text-white">{{ player.0 }} </th>
+                    <td class="bg-success text-white">{{ player.1 }} </td>
+                    <td class="bg-success text-white">{{ player.2 }} </td>
+                    <th class="bg-success text-white">{{ player.5 }} </th>
+                  </tr>
+                {% else %}
+                  <tr>
+                    <th>{{ player.6 }} </th>
+                    <th>{{ player.0 }} </th>
+                    <td>{{ player.1 }} </td>
+                    <td>{{ player.2 }} </td>
+                    <th>{{ player.5 }} </th>
+                  </tr>
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+  {% endif %}
+
+{% endblock %}
+
+{% block sidebar %}
+  <div class="nav flex-column" aria-orientation="vertical">
+    <li><a class="nav-link btn btn-panel" href="/">Вернуться</a></li>
+  </div>
+{% endblock %}
