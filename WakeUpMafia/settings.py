@@ -10,17 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
-import django_heroku
 from pathlib import Path
 import os
 
-import environ
-
-env = environ.Env()
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -29,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-i0)@)3%-ny(@b5^3w+)+687-(omn5_5us5d75^+ci@df0oyjiu'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool('DEBUG', default=False)
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["51.250.105.245"]
 
 
 # Application definition
@@ -83,7 +77,10 @@ WSGI_APPLICATION = 'WakeUpMafia.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    'default': env.db(),
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
 
 
@@ -143,5 +140,3 @@ LOGIN_REDIRECT_URL = '/'
 
 # e-mail на консоль
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
-django_heroku.settings(locals(), staticfiles=False)
