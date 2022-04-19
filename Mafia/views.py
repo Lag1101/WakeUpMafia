@@ -10,8 +10,10 @@ from django.db.models import Count, Sum
 
 def index(request):
     events = Event.objects.all().order_by('date_event')
-    if len(events) > 10:
-        events = events[-10:]
+    count = len(events)
+    if count > 10:
+        print(count)
+        events = events[count-9:count]
 
     return render(request, 'main.html', context={'events': events, })
 
