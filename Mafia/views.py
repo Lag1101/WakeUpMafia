@@ -10,7 +10,7 @@ from django.db.models import Count, Sum
 
 
 def index(request):
-    event_list = Event.objects.all().order_by('date_event')
+    event_list = Event.objects.all().order_by('-date_event')
     paginator = Paginator(event_list, 10)
 
     page = request.GET.get('page')
