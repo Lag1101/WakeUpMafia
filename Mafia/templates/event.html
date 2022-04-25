@@ -85,7 +85,7 @@
   <div class="nav flex-column" aria-orientation="vertical">
     <li><a class="nav-link btn btn-panel" href="/">Вернуться</a></li>
     {% for group in request.user.groups.all %}
-      {% if group.name == "Club Administration" %}
+      {% if group.name == "Club Administration" or group.name == league.admins_tag %}
         <li><a class="nav-link btn btn-panel" href="./{{ event.id }}/create_game">Внести игру</a></li>
         <li><a class="nav-link btn btn-panel" href="./{{ event.id }}/generate_game">Создать рассадку</a></li>
       {% endif %}

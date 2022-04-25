@@ -28,7 +28,7 @@ class CreateEvent(ModelForm):
 class CreateLeague(ModelForm):
     class Meta:
         model = League
-        fields = ['name', 'rating_type']
+        fields = ['name', 'rating_type', 'admins_tag']
 
 
 class CreateGame(ModelForm):

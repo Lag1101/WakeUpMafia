@@ -83,7 +83,7 @@
   <div class="nav flex-column" aria-orientation="vertical">
     <li><a class="nav-link btn btn-panel" href="../{{ event.id }}">Вернуться</a></li>
     {% for group in request.user.groups.all %}
-      {% if group.name == "Club Administration" %}
+      {% if group.name == "Club Administration" or group.name == league.admins_tag %}
         <li><a class="nav-link btn btn-panel" href="./{{ game.id }}/edit_players">Изменить состав</a></li>
         <li><a class="nav-link btn btn-panel" href="./{{ game.id }}/edit_results">Внести результат</a></li>
         <li><a class="nav-link btn btn-panel" href="./{{ game.id }}/edit_best_move">Лучший ход</a></li>

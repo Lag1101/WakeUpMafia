@@ -5,11 +5,42 @@
         <h1>Игры</h1>
         {% if events %}
             {% for event in events %}
-                <a class="nav-link btn btn-panel" href="./event/{{ event.id }}">{{ event.name }} ({{event.date_event}})</a>
+                <div class="row">
+                    <a class="nav-link btn btn-panel" href="./event/{{ event.id }}">{{ event.name }} ({{event.date_event}})</a>
+                </div>
             {% endfor %}
         {% else %}
             <p>Нет событий</p>
         {% endif %}
+        <div class="row align-items-end">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    {% if events.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ events.previous_page_number }}">Назад</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="?page={{ events.previous_page_number }}">{{ events.previous_page_number }}</a></li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">Назад</a>
+                    </li>
+                    {% endif %}
+
+                    <li class="page-item active"><a class="page-link" href="?page={{ events.number }}">{{ events.number }}</a></li>
+
+                    {% if events.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ events.next_page_number }}">{{ events.next_page_number }}</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ events.next_page_number }}">Вперед</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">Вперед</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
     </div>
 {% endblock %}
 

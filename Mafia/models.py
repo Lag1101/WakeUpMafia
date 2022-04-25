@@ -12,6 +12,7 @@ class League(models.Model):
 
     name = models.CharField(max_length=100)
     rating_type = models.CharField(max_length=20, choices=TYPE, default='SEASON')
+    admins_tag = models.CharField(max_length=20, default='NONE')
     active = models.BooleanField(default=True)
 
     def __str__(self):
@@ -19,11 +20,6 @@ class League(models.Model):
 
 
 class Event(models.Model):
-    TYPE = [
-        ('FUN', 'Клубные игры'),
-        ('FUN22', 'Клубные игры 2022'),
-        ('MINI', 'Миникап'),
-    ]
 
     name = models.CharField(max_length=100)
     date_event = models.DateField(auto_now=False)

@@ -1,4 +1,5 @@
 from django.http import HttpResponse, HttpResponseRedirect
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render
 from django.http import Http404
 from .forms import *
@@ -9,11 +10,16 @@ from django.db.models import Count, Sum
 
 
 def index(request):
-    events = Event.objects.all().order_by('date_event')
-    count = len(events)
-    if count > 10:
-        print(count)
-        events = events[count-9:count]
+    event_list = Event.objects.all().order_by('date_event')
+    paginator = Paginator(event_list, 10)
+
+    page = request.GET.get('page')
+    try:
+        events = paginator.page(page)
+    except PageNotAnInteger:
+        events = paginator.page(1)
+    except EmptyPage:
+        events = paginator.page(paginator.num_pages)
 
     return render(request, 'main.html', context={'events': events, })
 
@@ -66,13 +72,16 @@ def event(request, event_id):
     except Event.DoesNotExist:
         raise Http404("Event does not exist")
 
+    league = League.objects.get(name=event_id.type)
     game_with_player = []
     games = Game.objects.filter(event_id=event_id)
     for game in games:
         players = Player.objects.filter(game_id=game).order_by('number')
         game_with_player.append([game, players])
 
-    return render(request, 'event.html', context={'event': event_id, 'game_with_player': game_with_player, })
+    return render(request, 'event.html', context={'event': event_id,
+                                                  'game_with_player': game_with_player,
+                                                  'league': league, })
 
 
 def create_game(request, event_id):
@@ -139,10 +148,14 @@ def generate_game(request, event_id):
 
 def game_info(request, event_id, game_id):
     event_id = Event.objects.get(id=event_id)
+    league = League.objects.get(name=event_id.type)
     game_id = Game.objects.get(id=game_id)
     players = Player.objects.filter(game_id=game_id).order_by('number')
 
-    return render(request, 'game_info.html', context={'event': event_id, 'game': game_id, 'players': players, })
+    return render(request, 'game_info.html', context={'event': event_id,
+                                                      'league': league,
+                                                      'game': game_id,
+                                                      'players': players, })
 
 
 def game_edit_players(request, event_id, game_id):
@@ -229,10 +242,15 @@ def game_edit_best_move(request, event_id, game_id):
         for player in players:
             if player.best_move != 'none' and player.number != first_kill:
                 player.best_move = 'none'
+                player.add_point = 0
                 player.save()
             if player.number == first_kill:
                 player.best_move = best_move
                 player.save()
+
+        for player in players:
+            print(player.people_id)
+            print(player.best_move)
 
         calculate_point(game_id)
 
