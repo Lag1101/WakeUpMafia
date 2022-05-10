@@ -33,18 +33,18 @@
               {% if player.best_move == "none" %}
                 <td class="bg-danger text-white">
                   <img src="{% static '/icon/hand-thumbs-up.svg' %}" alt="" width="auto" height="auto">
-                  Мирный
+                  Мир
                 </td>
               {% else %}
                 <td class="bg-danger text-white">
                   <img src="{% static '/icon/target.svg' %}" alt="" width="auto" height="auto">
-                  Мирный
+                  Мир
                 </td>
               {% endif %}
             {% elif player.role == "MAFIA" %}
             <td class="bg-dark text-white">
               <img src="{% static '/icon/revolver-gun.svg' %}" alt="" width="auto" height="auto">
-              Мафия
+              Маф
             </td>
             {% elif player.role == "DON" %}
             <td class="bg-dark text-white">
@@ -55,12 +55,12 @@
               {% if player.best_move == "none" %}
                 <td class="bg-success text-white">
                   <img src="{% static '/icon/sheriff-star.svg' %}" alt="" width="auto" height="auto">
-                  Шериф
+                  Шер
                 </td>
               {% else %}
                 <td class="bg-success text-white">
                   <img src="{% static '/icon/target.svg' %}" alt="" width="auto" height="auto">
-                  Шериф
+                  Шер
                 </td>
               {% endif %}
             {% else %}

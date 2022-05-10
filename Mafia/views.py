@@ -298,12 +298,20 @@ def rating(request):
                 values[4] += p.add_point
 
         values = rate.values()
+
         rating_table = []
         for x in values:
             line = []
             for y in x:
                 line.append(y)
-            line.append(round(2 * line[2] * 2 * line[2]/line[1], 2))
+
+            if league.rating_type == 'SEASON':
+                line.append(round(2 * line[2] * 2 * line[2]/line[1], 2))
+            elif league.rating_type == 'SERIES':
+                line.append(line[3])
+            else:
+                line.append(line[3])
+
             rating_table.append(line)
 
         rating_table.sort(key=lambda el: el[5], reverse=True)

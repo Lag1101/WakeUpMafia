@@ -50,6 +50,8 @@
             {% if group.name == "Club Administration" %}
                 <li><a class="nav-link btn btn-panel" href="../admin">Администраторская</a></li>
                 <li><a class="nav-link btn btn-panel" href="{% url 'create_league' %}">Создать лигу</a></li>
+            {% endif %}
+            {% if group.name == "Club Administration"  or group.name == "Club MIET" %}
                 <li><a class="nav-link btn btn-panel" href="{% url 'create_event' %}">Создать событие</a></li>
             {% endif %}
         {% endfor %}
