@@ -9,7 +9,7 @@
     <div class="row">
       <div class="col-xl-6 col-md-12">
         <h1>
-          <a href="./full_rate/{{ rating_table.1 }}">{{rating_table.0}}</a>
+          {{ rating_table.0 }}
         </h1>
         <table class="table table-bordered border-dark">
           <thead>
@@ -23,24 +23,22 @@
           </thead>
           <tbody>
             {% for player in rating_table.2 %}
-              {% if player.6 <= 10 or request.user == player.0 %}
-                {% if request.user == player.0 %}
-                  <tr>
-                    <th class="bg-success text-white">{{ player.6 }} </th>
-                    <th class="bg-success text-white">{{ player.0 }} </th>
-                    <td class="bg-success text-white">{{ player.1 }} </td>
-                    <td class="bg-success text-white">{{ player.2 }} </td>
-                    <th class="bg-success text-white">{{ player.5 }} </th>
-                  </tr>
-                {% else %}
-                  <tr>
-                    <th>{{ player.6 }} </th>
-                    <th>{{ player.0 }} </th>
-                    <td>{{ player.1 }} </td>
-                    <td>{{ player.2 }} </td>
-                    <th>{{ player.5 }} </th>
-                  </tr>
-                {% endif %}
+              {% if request.user == player.0 %}
+                <tr>
+                  <th class="bg-success text-white">{{ player.6 }} </th>
+                  <th class="bg-success text-white">{{ player.0 }} </th>
+                  <td class="bg-success text-white">{{ player.1 }} </td>
+                  <td class="bg-success text-white">{{ player.2 }} </td>
+                  <th class="bg-success text-white">{{ player.5 }} </th>
+                </tr>
+              {% else %}
+                <tr>
+                  <th>{{ player.6 }} </th>
+                  <th>{{ player.0 }} </th>
+                  <td>{{ player.1 }} </td>
+                  <td>{{ player.2 }} </td>
+                  <th>{{ player.5 }} </th>
+                </tr>
               {% endif %}
             {% endfor %}
           </tbody>

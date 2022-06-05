@@ -16,4 +16,5 @@ urlpatterns = [
     path('event/<int:event_id>/<int:game_id>/edit_best_move', views.game_edit_best_move, name='game_edit_best_move'),
     path('event/<int:event_id>/<int:game_id>/edit_points', views.game_edit_points, name='game_edit_points'),
     path('rating', views.rating, name='rating'),
+    path('full_rate/<int:league_id>', views.full_rating, name='full_rating'),
 ]
