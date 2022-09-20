@@ -307,6 +307,8 @@ def rating(request):
 
             if league.rating_type == 'SEASON':
                 line.append(round(2 * line[2] * 2 * line[2]/line[1], 2))
+            elif league.rating_type == 'SEASON MIET':
+                line.append(round(10 * line[2] * line[2] * line[2]/(line[1] *line[1]), 2))
             elif league.rating_type == 'SERIES':
                 line.append(round(line[3], 2))
             else:

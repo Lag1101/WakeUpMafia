@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 class League(models.Model):
     TYPE = [
         ('SEASON', 'Сезон'),
+        ('SEASON MIET', 'Сезон МИЭТ'),
         ('SERIES', 'Серия'),
         ('FINAL', 'Финал'),
     ]
